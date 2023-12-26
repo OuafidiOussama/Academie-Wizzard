@@ -13,5 +13,6 @@ Academie Wizzard is a plateform for sharing courses for students to consume. Thi
 
 ## UML : 
 ### Class Diagram
-![alt text](https://cdn.discordapp.com/attachments/1017076736149704806/1189164131157295144/academi-ClassDiagram.png?ex=659d2a66&is=658ab566&hm=22ee45926ff367a60bb70edcd739c323489652ffb1bbc4a36bf31ac34a09b773&)
+![alt text](https://cdn.discordapp.com/attachments/1149715950787100796/1189206033747431444/academi-ClassDiagram_1.png?ex=659d516c&is=658adc6c&hm=47716be3a37128159e69839c1402ad3489356bc6834b163e34d17792b7d33e0e&)
+)
 ## Testing Coverage:

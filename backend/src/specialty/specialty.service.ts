@@ -1,26 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSpecialtyDto } from './dto/create-specialty.dto';
 import { UpdateSpecialtyDto } from './dto/update-specialty.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Specialty } from './entities/specialty.entity';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class SpecialtyService {
-  create(createSpecialtyDto: CreateSpecialtyDto) {
-    return 'This action adds a new specialty';
+
+  constructor(
+    @InjectRepository(Specialty)
+    private readonly SpecialtyRepository: Repository<Specialty>
+  ){}
+  
+  async create(SpecialtyData: CreateSpecialtyDto) {
+    const specialty = this.SpecialtyRepository.create(SpecialtyData)
+    return await this.SpecialtyRepository.save(specialty)
   }
 
-  findAll() {
-    return `This action returns all specialty`;
+  async findAll() {
+    return await this.SpecialtyRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} specialty`;
+  async findOne(id: number) {
+    const specialty = await this.SpecialtyRepository.findOne({ where: { id } });
+    if (!specialty) {
+      throw new NotFoundException();
+    }
+    return specialty;
   }
 
-  update(id: number, updateSpecialtyDto: UpdateSpecialtyDto) {
-    return `This action updates a #${id} specialty`;
+  async update(id: number, SpecialtyData: UpdateSpecialtyDto) {
+    const specialty = await this.findOne(id);
+    if (!specialty) {
+      throw new NotFoundException()
+    }
+    Object.assign(specialty, SpecialtyData);
+
+    return await this.SpecialtyRepository.save(specialty)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} specialty`;
+  async remove(id: number) {
+    const specialty = await this.findOne(id);
+    if (!specialty) {
+      throw new NotFoundException()
+    }
+    return await this.SpecialtyRepository.remove(specialty);
   }
 }

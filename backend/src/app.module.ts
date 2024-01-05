@@ -11,9 +11,10 @@ import { DepartementModule } from './departement/departement.module';
 import { ResultModule } from './result/result.module';
 import { StudentModule } from './student/student.module';
 import { TeacherModule } from './teacher/teacher.module';
+import { ClassroomModule } from './classroom/classroom.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule, TeacherModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule, TeacherModule, ClassroomModule],
   controllers: [AppController],
   providers: [AppService],
 })

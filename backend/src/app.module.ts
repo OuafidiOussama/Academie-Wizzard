@@ -10,9 +10,10 @@ import { UserModule } from './user/user.module';
 import { DepartementModule } from './departement/departement.module';
 import { ResultModule } from './result/result.module';
 import { StudentModule } from './student/student.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule, TeacherModule],
   controllers: [AppController],
   providers: [AppService],
 })

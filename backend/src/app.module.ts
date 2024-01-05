@@ -13,9 +13,10 @@ import { StudentModule } from './student/student.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { DeanModule } from './dean/dean.module';
+import { SuperAdminModule } from './super-admin/super-admin.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule, TeacherModule, ClassroomModule, DeanModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule, TeacherModule, ClassroomModule, DeanModule, SuperAdminModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,26 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDepartementDto } from './dto/create-departement.dto';
 import { UpdateDepartementDto } from './dto/update-departement.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Departement } from './entities/departement.entity';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class DepartementService {
-  create(createDepartementDto: CreateDepartementDto) {
-    return 'This action adds a new departement';
+
+  constructor(
+    @InjectRepository(Departement)
+    private readonly DepartementRepository: Repository<Departement>
+  ){}
+  
+  async create(DepartementData: CreateDepartementDto) {
+    const departement = this.DepartementRepository.create(DepartementData)
+    return await this.DepartementRepository.save(departement)
   }
 
-  findAll() {
-    return `This action returns all departement`;
+  async findAll() {
+    return await this.DepartementRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} departement`;
+  async findOne(id: number) {
+    const departement = await this.DepartementRepository.findOne({
+      where: { id },
+    });
+    if (!departement) {
+      throw new NotFoundException();
+    }
+    return departement;
   }
 
-  update(id: number, updateDepartementDto: UpdateDepartementDto) {
-    return `This action updates a #${id} departement`;
+  async update(id: number, DepartementData: UpdateDepartementDto) {
+    const departement = await this.findOne(id);
+    if (!departement) {
+      throw new NotFoundException()
+    }
+    Object.assign(departement, DepartementData);
+
+    return await this.DepartementRepository.save(departement)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} departement`;
+  async remove(id: number) {
+    const departement = await this.findOne(id);
+    if (!departement) {
+      throw new NotFoundException()
+    }
+    return await this.DepartementRepository.remove(departement);
   }
 }

@@ -14,7 +14,7 @@ export class FacultyService {
     private readonly facultyRepository: Repository<Faculty>
   ){}
   
-  async create(facultyData : CreateFacultyDto) {
+  async create(facultyData: CreateFacultyDto) {
     const faculty = this.facultyRepository.create(facultyData)
     return await this.facultyRepository.save(faculty)
   }
@@ -25,7 +25,7 @@ export class FacultyService {
 
   async findOne(id: number) {
     const faculty = await this.facultyRepository.findOne({where: { id }});
-    if(!faculty){
+    if (!faculty) {
       throw new NotFoundException();
     }
     return faculty;

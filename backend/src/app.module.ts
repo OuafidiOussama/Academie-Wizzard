@@ -8,9 +8,10 @@ import { SubjectModule } from './subject/subject.module';
 import { SpecialtyModule } from './specialty/specialty.module';
 import { UserModule } from './user/user.module';
 import { DepartementModule } from './departement/departement.module';
+import { ResultModule } from './result/result.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule],
   controllers: [AppController],
   providers: [AppService],
 })

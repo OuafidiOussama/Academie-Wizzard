@@ -1,27 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFacultyDto } from './dto/create-faculty.dto';
 import { UpdateFacultyDto } from './dto/update-faculty.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Faculty } from './entities/faculty.entity';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class FacultyService {
+
+  constructor(
+    @InjectRepository(Faculty)
+    private readonly facultyRepository: Repository<Faculty>
+  ){}
   
-  create(createFacultyDto: CreateFacultyDto) {
-    return createFacultyDto;
+  async create(facultyData : CreateFacultyDto) {
+    const faculty = this.facultyRepository.create(facultyData)
+    return await this.facultyRepository.save(faculty)
   }
 
-  findAll() {
-    return `This action returns all faculty`;
+  async findAll() {
+    return await this.facultyRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} faculty`;
+  async findOne(id: number) {
+    const faculty = await this.facultyRepository.findOne({where: { id }});
+    if(!faculty){
+      throw new NotFoundException();
+    }
+    return faculty;
   }
 
-  update(id: number, updateFacultyDto: UpdateFacultyDto) {
-    return `This action updates a #${id} faculty`;
+  async update(id: number, facultyData: UpdateFacultyDto) {
+    const faculty = await this.findOne(id);
+    if(!faculty){
+      throw new NotFoundException()
+    }
+    Object.assign(faculty, facultyData);
+
+    return await this.facultyRepository.save(faculty)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} faculty`;
+  async remove(id: number) {
+    const faculty = await this.findOne(id);
+    if(!faculty){
+      throw new NotFoundException()
+    }
+    return await this.facultyRepository.remove(faculty);
   }
 }

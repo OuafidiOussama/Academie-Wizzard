@@ -8,4 +8,6 @@ export class CreateFacultyDto {
     @IsNotEmpty({message: "Please Providethe faculty's Address"})
     @IsString()
     address : string
+
+	
 }

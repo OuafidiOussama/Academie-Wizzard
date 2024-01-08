@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateSubjectDto } from './create-Subject.dto';
+import { CreateSubjectDto } from './create-subject.dto';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateSubjectDto extends PartialType(CreateSubjectDto) {

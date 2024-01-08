@@ -1,13 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Departement } from "../../departement/entities/departement.entity";
 
 @Entity('faculties')
-export class Faculty{
+export class Faculty {
     @PrimaryGeneratedColumn()
-    id : number
+    id: number;
 
     @Column()
-    label : string
+    label: string;
 
     @Column()
-    address : string
+    address: string;
+
+    @OneToMany(() => Departement, departement => departement.faculty)
+    departements: Departement[];
 }

@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { DepartementService } from './departement.service';
 import { CreateDepartementDto } from './dto/create-departement.dto';
 import { UpdateDepartementDto } from './dto/update-departement.dto';
 
-@Controller('departement')
+@Controller('Departement')
 export class DepartementController {
-  constructor(private readonly departementService: DepartementService) {}
+  constructor(private readonly DepartementService: DepartementService) {}
 
-  @Post()
-  create(@Body() createDepartementDto: CreateDepartementDto) {
-    return this.departementService.create(createDepartementDto);
+  @Post('/create')
+  @UsePipes(ValidationPipe)
+  async create(@Body() DepartementData: CreateDepartementDto) {
+    return await this.DepartementService.create(DepartementData);
   }
 
   @Get()
   findAll() {
-    return this.departementService.findAll();
+    return this.DepartementService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.departementService.findOne(+id);
+    return this.DepartementService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDepartementDto: UpdateDepartementDto) {
-    return this.departementService.update(+id, updateDepartementDto);
+  @Patch('/update/:id')
+  @UsePipes(ValidationPipe)
+  update(
+    @Param('id') id: string,
+    @Body() updateDepartementDto: UpdateDepartementDto,
+  ) {
+    return this.DepartementService.update(+id, updateDepartementDto);
   }
 
-  @Delete(':id')
+  @Delete('/delete/:id')
   remove(@Param('id') id: string) {
-    return this.departementService.remove(+id);
+    return this.DepartementService.remove(+id);
   }
 }

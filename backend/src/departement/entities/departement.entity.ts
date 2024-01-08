@@ -1,10 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Faculty } from '../../faculty/entities/faculty.entity';
 @Entity('departements')
 export class Departement {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    label: string
+  @Column()
+  label: string;
+
+  @Column()
+  facultyId: number;
+
+  @ManyToOne(() => Faculty, (faculty) => faculty.departements)
+  faculty: Faculty;
 }

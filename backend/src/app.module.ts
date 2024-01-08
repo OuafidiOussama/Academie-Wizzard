@@ -16,7 +16,7 @@ import { DeanModule } from './dean/dean.module';
 import { SuperAdminModule } from './super-admin/super-admin.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule ,DepartementModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), FacultyModule, ResultModule, StudentModule, TeacherModule, ClassroomModule, DeanModule, SuperAdminModule,DepartementModule,SubjectModule],
   controllers: [AppController],
   providers: [AppService],
 })

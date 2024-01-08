@@ -6,5 +6,5 @@ export class Specialty {
     id : number
 
     @Column()
-    name: string
+    label: string
 }

@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ClassroomService } from './classroom.service';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
 
-@Controller('classroom')
+@Controller('Classroom')
 export class ClassroomController {
-  constructor(private readonly classroomService: ClassroomService) {}
+  constructor(private readonly ClassroomService: ClassroomService) {}
 
-  @Post()
-  create(@Body() createClassroomDto: CreateClassroomDto) {
-    return this.classroomService.create(createClassroomDto);
+  @Post('/create')
+  @UsePipes(ValidationPipe)
+  async create(@Body() classroomData: CreateClassroomDto) {
+    return await this.ClassroomService.create(classroomData);
   }
 
   @Get()
   findAll() {
-    return this.classroomService.findAll();
+    return this.ClassroomService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.classroomService.findOne(+id);
+    return this.ClassroomService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClassroomDto: UpdateClassroomDto) {
-    return this.classroomService.update(+id, updateClassroomDto);
+  @Patch('/update/:id')
+  @UsePipes(ValidationPipe)
+  update(
+    @Param('id') id: string,
+    @Body() updateclassroomDto: UpdateClassroomDto,
+  ) {
+    return this.ClassroomService.update(+id, updateclassroomDto);
   }
 
-  @Delete(':id')
+  @Delete('/delete/:id')
   remove(@Param('id') id: string) {
-    return this.classroomService.remove(+id);
+    return this.ClassroomService.remove(+id);
   }
 }
